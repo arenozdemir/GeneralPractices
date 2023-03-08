@@ -5,6 +5,15 @@ using UnityEngine.UIElements;
 public static class FunctionLibrary
 {
     public delegate float Function(float x, float t);
+
+    public enum FunctionName { Wave, MultiWave, Ripple }
+    
+    static Function[] functions = { Wave, MultiWave, Ripple };
+
+    public static Function GetFunction(FunctionName name)
+    {
+        return functions[(int)name];
+    }
     public static float Wave(float position, float time) => Sin(PI * (position + time));
 
     public static float MultiWave(float position, float time)
@@ -14,20 +23,4 @@ public static class FunctionLibrary
         return y * (2f / 3f);
     }
     public static float Ripple(float position, float time) => Sin(PI * (4f * Abs(position) - time)) / (1f + 10f * position * position);
-
-    public static Function GetFunction(int index)
-    {
-        if (index == 0)
-        {
-            return Wave;
-        }
-        else if (index == 1)
-        {
-            return MultiWave;
-        }
-        else
-        {
-            return Ripple;
-        }
-    }
 }
